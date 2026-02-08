@@ -460,15 +460,24 @@ h3 {
 }
 
 .float-card-1 {
-    top: 30px;
-    left: -30px;
+    top: 5%;
+    left: -20px;
     animation-delay: 0s;
 }
 
 .float-card-2 {
-    bottom: 40px;
-    right: -20px;
-    animation-delay: 1.5s;
+    top: 40%;
+    right: -30px;
+    animation-delay: 1s;
+}
+
+.float-card-3 {
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: fit-content;
+    animation-delay: 2s;
 }
 
 .float-icon {
@@ -1349,11 +1358,17 @@ h3 {
 
     .float-card-1 {
         left: 0;
+        right: 0;
         top: 10px;
     }
 
     .float-card-2 {
         right: 0;
+        top: 45%;
+    }
+
+    .float-card-3 {
+        left: 0;
         bottom: 20px;
     }
 

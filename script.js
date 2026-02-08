@@ -119,28 +119,49 @@ document.addEventListener('DOMContentLoaded', () => {
         revealObserver.observe(el);
     });
 
-    // --- Contact form handling ---
+    // --- Contact form handling (Formspree) ---
     const contactForm = document.getElementById('contactForm');
 
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const formData = new FormData(contactForm);
-        const data = Object.fromEntries(formData.entries());
-
-        // Show a simple confirmation (replace with real API call)
         const btn = contactForm.querySelector('button[type="submit"]');
         const originalText = btn.textContent;
-        btn.textContent = 'Enquiry Sent!';
-        btn.style.background = 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)';
+        btn.textContent = 'Sending...';
         btn.disabled = true;
 
-        setTimeout(() => {
-            btn.textContent = originalText;
-            btn.style.background = '';
-            btn.disabled = false;
-            contactForm.reset();
-        }, 3000);
+        fetch(contactForm.action, {
+            method: 'POST',
+            body: new FormData(contactForm),
+            headers: { 'Accept': 'application/json' }
+        }).then(response => {
+            if (response.ok) {
+                btn.textContent = 'Enquiry Sent!';
+                btn.style.background = 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)';
+                contactForm.reset();
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 3000);
+            } else {
+                btn.textContent = 'Error — Try Again';
+                btn.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 3000);
+            }
+        }).catch(() => {
+            btn.textContent = 'Error — Try Again';
+            btn.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+                btn.disabled = false;
+            }, 3000);
+        });
     });
 
     // --- Smooth scroll for anchor links ---
